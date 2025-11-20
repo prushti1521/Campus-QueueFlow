@@ -100,7 +100,21 @@ if (!localStorage.getItem("locations")) {
         { id: "dining-student-centre", name: "CAW Student Centre (Dining / Marketplace)", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
         { id: "library-help-desk", name: "Leddy Library Help Desk", currentQueue: 8, avgWaitTime: 15, crowdLevel: "green", lastUpdated: "Just now" },
         { id: "international-student-centre", name: "International Student Centre (ISC)", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
-        // ... add the rest of your locations here
+        { id: "registrar-office", name: "Registrar's Office", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "financial-aid", name: "Financial Aid Office", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "career-services", name: "Career Services Centre", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "student-accounts", name: "Student Accounts / Payments", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "campus-police", name: "Campus Police / Security Desk", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "recreation-centre", name: "University Recreation Centre", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "student-life", name: "Student Life Office", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "housing-services", name: "Housing / Residence Services", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "it-support", name: "IT Help Desk / Support", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "bookstore", name: "Campus Bookstore", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "writing-support", name: "Writing Support Desk", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "peer-support", name: "Peer Support Centre", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "uw-career-centre", name: "Career Centre (CDEL – JEC)", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "co-op-career-employment", name: "Co‑op, Career & Employment Services (CCES)", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" },
+        { id: "entrepreneurship-innovation-centre", name: "EPICentre – Entrepreneurship Practice & Innovation Centre", currentQueue: 0, avgWaitTime: 0, crowdLevel: "green", lastUpdated: "Just now" }
     ];
     localStorage.setItem("locations", JSON.stringify(defaultLocations));
 }
