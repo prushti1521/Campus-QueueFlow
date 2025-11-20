@@ -193,7 +193,7 @@ h1, h2, h3 {
     align-items: center;
     text-align: center;
 
-    background-image: url('hero2.png'); /* your image */
+    background-image: url('hero.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -629,7 +629,7 @@ footer, .container p.footer {
    ADMIN PAGE CONTAINER
 ========================= */
 .admin-container {
-    width: 50vw;                 /* wider on laptop */
+    width: 50vw;                 
     min-width: 330px;
     max-width: 700px;
 
