@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About – Campus QueueFlow</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome for user icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+<div class="navbar">
+    <div class="logo">
+          <span class="logo-text">Campus QueueFlow</span>
+    </div>
+
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="admin.html" id="updateLink">Update</a> <!-- Added Update Queue link -->
+        <a href="login.html" class="user-icon" id="navUserIcon">
+            <i class="fas fa-user"></i>
+        </a>
+    </div>
+</div>
+
+<!-- =========================
+     ABOUT CONTENT
+========================= -->
+<div class="about-page">
+    <h1>About Campus QueueFlow</h1>
+    <p>
+        Campus QueueFlow is a real-time queue and wait-time tracking platform developed for the University of Windsor.
+    </p>
+
+    <!-- Our Goal Section -->
+    <div class="about-card goal-card">
+        <h2>Our Goal</h2>
+        <p>
+            Help students save time and reduce waiting by providing accurate, live updates about queues across campus services. 
+            Users can view estimated wait times, crowd levels, and queue lengths.
+        </p>
+    </div>
+
+    <!-- Features Section -->
+    <div class="about-card features-card">
+        <h2>Features</h2>
+        <ul>
+            <li><i class="fas fa-check-circle"></i> View live queue lengths and estimated wait times.</li>
+            <li><i class="fas fa-check-circle"></i> Color-coded crowd indicators: Green (Low), Yellow (Moderate), Red (Busy).</li>
+            <li><i class="fas fa-check-circle"></i> Dashboard to track all campus service locations.</li>
+            <li><i class="fas fa-check-circle"></i> Admin access to update queue status if logged in.</li>
+            <li><i class="fas fa-check-circle"></i> Responsive design for mobile and desktop.</li>
+        </ul>
+    </div>
+
+    <a href="dashboard.html"><button class="about-btn">View Dashboard</button></a>
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+<div class="container" style="text-align:center; margin-top:50px;">
+    <p>&copy; 2025 University of Windsor – Campus QueueFlow</p>
+</div>
+<script src="app.js"></script>
+<script>
+    updateNavbar();
+</script>
+</body>
+</html>

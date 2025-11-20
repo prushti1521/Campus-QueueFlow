@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campus QueueFlow – University of Windsor</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome for user icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+
+</head>
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+<div class="navbar">
+    <div class="logo">
+          <span class="logo-text">Campus QueueFlow</span>
+    </div>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+         <a href="admin.html" id="updateLink">Update</a> <!-- Added Update Queue link -->
+        <a href="login.html" class="user-icon" id="navUserIcon">
+            <i class="fas fa-user"></i>
+        </a>
+    </div>
+</div>
+
+<!-- =========================
+     HERO / WELCOME SECTION
+========================= -->
+<div class="hero-container">
+    <h1>Welcome to Campus QueueFlow</h1>
+    <p>Check live queue updates and estimated wait times for University of Windsor campus services. Stay informed and save time!</p>
+
+     <a href="dashboard.html" class="btn">View Dashboard</a>
+</div>
+
+<!-- =========================
+     WHY USE CAMPUS QUEUEFLOW
+========================= -->
+<div class="why-container">
+    <h2>Why Use Campus QueueFlow?</h2>
+
+    <div class="why-grid">
+        <div class="why-card">
+            <i class="fas fa-clock fa-3x"></i>
+            <h3>Save Time</h3>
+            <p>Check live queue status and reduce waiting times across campus services.</p>
+        </div>
+        <div class="why-card">
+            <i class="fas fa-calendar-check fa-3x"></i>
+            <h3>Plan Efficiently</h3>
+            <p>Organize your day by knowing the best times to visit advising, dining, or library services.</p>
+        </div>
+        <div class="why-card">
+            <i class="fas fa-smile fa-3x"></i>
+            <h3>Reduce Stress</h3>
+            <p>Stay informed and avoid unnecessary waiting. Enjoy a smoother campus experience.</p>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- =========================
+     OPTIONAL FOOTER
+========================= -->
+<div class="container" style="text-align:center; margin-top:50px;">
+    <p>&copy; 2025 University of Windsor – Campus QueueFlow</p>
+</div>
+<script src="app.js"></script>
+<script>
+    updateNavbar();
+</script>
+</body>
+</html>
+

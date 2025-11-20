@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Profile – Campus QueueFlow</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ===== PROFILE PAGE CSS ===== */
+        .profile-container {
+            width: 90%;
+            max-width: 380px;
+            margin: 6vh auto;
+            padding: 28px;
+            background: #ffffffd9;
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeUp 0.5s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 15px; }
+
+        .profile-photo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #e2e2e2;
+            margin-bottom: 12px;
+            transition: 0.3s;
+        }
+
+        .profile-photo:hover { transform: scale(1.05); }
+
+        .upload-label {
+            display: inline-block;
+            padding: 8px 14px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+        .upload-label:hover { background: #e4e4e4; transform: translateY(-2px); }
+
+        #photoUpload { display: none; }
+
+        .profile-email { font-size: 1.1rem; margin: 12px 0 20px; font-weight: 600; }
+
+        .logout-btn {
+            width: 100%;
+            padding: 1.5vh 1vw;
+            background: #003da5;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .logout-btn:hover { background: #0753d7; transform: translateY(-2px); }
+
+        .nav-profile-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo"><span class="logo-text">Campus QueueFlow</span></div>
+
+        <div class="links" id="navLinks">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="dashboard.html">Dashboard</a>
+            <!-- Update link will be inserted dynamically if logged in -->
+            <a href="admin.html" id="updateLink" style="display:none;">Update Queue</a>
+
+            <!-- USER ICON -->
+            <a href="login.html" id="navUserIcon" class="user-icon"><span id="userInitial">U</span></a>
+        </div>
+    </div>
+
+    <!-- ===== PROFILE BOX ===== -->
+    <div class="profile-container">
+        <h2 class="profile-title">Your Profile</h2>
+
+        <img id="profilePhoto" class="profile-photo" src="default-user.png">
+
+        <label for="photoUpload" class="upload-label">Change Photo</label>
+        <input type="file" id="photoUpload" accept="image/*">
+
+        <p class="profile-email" id="profileEmail"></p>
+
+        <button class="logout-btn" onclick="logoutUser()">Logout</button>
+    </div>
+
+
+
+    <script>
+    // ===============================
+    // PROFILE PAGE LOGIC
+    // ===============================
+
+    const loggedUser = localStorage.getItem("loggedInUser");
+    if (!loggedUser) window.location.href = "login.html";
+
+    // Display email
+    document.getElementById("profileEmail").innerText = loggedUser;
+
+    // Display first letter as initial
+    document.getElementById("userInitial").innerText = loggedUser.charAt(0).toUpperCase();
+
+    // Load saved profile photo for this user
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    let currentUser = users.find(u => u.email === loggedUser);
+
+    if (currentUser && currentUser.photo) {
+        document.getElementById("profilePhoto").src = currentUser.photo;
+    }
+
+    // Upload new profile photo
+    document.getElementById("photoUpload").addEventListener("change", function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function() {
+            const photoData = reader.result;
+            document.getElementById("profilePhoto").src = photoData;
+
+            // Save photo to current user object
+            if (currentUser) {
+                currentUser.photo = photoData;
+                localStorage.setItem("users", JSON.stringify(users));
+            }
+
+            updateNavbar(); // Update navbar immediately
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Logout
+    function logoutUser() {
+        localStorage.removeItem("loggedInUser");
+        updateNavbar();
+        window.location.href = "login.html";
+    }
+
+    // ===============================
+    // NAVBAR UPDATE FUNCTION
+    // ===============================
+    function updateNavbar() {
+        const navUserIcon = document.getElementById("navUserIcon");
+        const loggedUserEmail = localStorage.getItem("loggedInUser");
+
+        if (!navUserIcon) return;
+
+        if (loggedUserEmail) {
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const user = users.find(u => u.email === loggedUserEmail);
+
+            const updateLink = document.getElementById("updateLink");
+            if (updateLink) updateLink.style.display = "inline";
+
+            navUserIcon.classList.add("logged-in");
+            navUserIcon.href = "profile.html";
+            navUserIcon.title = "Logged in as " + loggedUserEmail;
+
+            if (user && user.photo) {
+                navUserIcon.innerHTML = `<img src="${user.photo}" alt="Profile" class="nav-profile-img">`;
+            } else {
+                navUserIcon.innerHTML = `<span class="nav-profile-initial">${loggedUserEmail.charAt(0).toUpperCase()}</span>`;
+            }
+        } else {
+            const updateLink = document.getElementById("updateLink");
+            if (updateLink) updateLink.style.display = "none";
+
+            navUserIcon.classList.remove("logged-in");
+            navUserIcon.href = "login.html";
+            navUserIcon.title = "Login";
+            navUserIcon.innerHTML = `<i class="fas fa-user"></i>`;
+        }
+    }
+
+    // Initialize navbar on page load
+    document.addEventListener("DOMContentLoaded", () => {
+        updateNavbar();
+    });
+</script>
+
+
+</body>
+</html>

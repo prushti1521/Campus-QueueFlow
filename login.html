@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login – Campus QueueFlow</title>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+</head>
+
+<body>
+<!-- =========================
+     NAVBAR
+========================= -->
+<div class="navbar">
+     <div class="logo">
+          <span class="logo-text">Campus QueueFlow</span>
+    </div>
+
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+         <a href="admin.html" id="updateLink">Update</a> <!-- Added Update Queue link -->
+        <a href="login.html" class="user-icon" id="navUserIcon">
+            <i class="fas fa-user"></i>
+        </a>
+
+      
+
+    </div>
+</div>
+
+
+<div class="login-container">
+    <h2>Create Account or Sign In</h2>
+
+    <input class="input" id="email" type="email" placeholder="Email">
+    <input class="input" id="password" type="password" placeholder="Password">
+    
+    <div class="button-row"></div>
+    <button class="btn login-btn" onclick="login()">Login</button>
+    <button class="btn signup-btn" onclick="signup()">Create Account</button>
+    
+    <hr>
+
+ <div id="g_id_onload"
+         data-client_id="YOUR_GOOGLE_CLIENT_ID"
+         data-auto_prompt="false"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin"></div>
+
+</div></div>
+
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+<script>
+    updateNavbar();
+</script>
+
+<script>
+
+    // ===============================
+// USER ACCOUNT SYSTEM (No Firebase)
+// ===============================
+
+// Save user
+function signup() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (users.some(u => u.email === email)) {
+        alert("Account already exists!");
+        return;
+    }
+
+    users.push({ email, password: pass });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Account created! You can now login.");
+}
+
+// Login user
+function login() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const found = users.find(u => u.email === email && u.password === pass);
+
+    if (found) {
+        localStorage.setItem("loggedInUser", email);
+        localStorage.removeItem("profilePhoto"); // no photo for normal login
+        alert("Logged in successfully!");
+        window.location.href = "dashboard.html";
+    } else {
+        alert("Invalid email or password");
+    }
+}
+
+// Google login
+function handleCredentialResponse(response) {
+    const jwt = response.credential;
+
+    // Decode JWT to get user info
+    const base64Url = jwt.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const user = JSON.parse(window.atob(base64));
+
+    console.log("Google user:", user);
+
+    localStorage.setItem("loggedInUser", user.email);
+    localStorage.setItem("profilePhoto", user.picture);
+
+    updateNavbar();
+    alert("Signed in as " + user.name);
+    window.location.href = "dashboard.html";
+}
+
+// ===============================
+// NAVBAR UPDATE
+// ===============================
+function updateNavbar() {
+    const navUserIcon = document.getElementById("navUserIcon");
+    const loggedUser = localStorage.getItem("loggedInUser");
+    const profilePhoto = localStorage.getItem("profilePhoto");
+
+    if (loggedUser) {
+        navUserIcon.href = "profile.html";
+        navUserIcon.title = loggedUser;
+
+        if (profilePhoto) {
+            navUserIcon.innerHTML = `<img src="${profilePhoto}" class="nav-profile-img" style="width:35px;height:35px;border-radius:50%;">`;
+        } else {
+            navUserIcon.innerHTML = `<i class="fas fa-user"></i>`;
+        }
+    } else {
+        navUserIcon.href = "login.html";
+        navUserIcon.title = "Login";
+        navUserIcon.innerHTML = `<i class="fas fa-user"></i>`;
+    }
+}
+
+// Call on load
+document.addEventListener("DOMContentLoaded", () => {
+    updateNavbar();
+
+    // Redirect login page if already logged in
+    if (window.location.pathname.includes("login.html") && localStorage.getItem("loggedInUser")) {
+        window.location.href = "dashboard.html";
+    }
+});
+
+</script>
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard – Campus QueueFlow</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<!-- Navbar with logo and links -->
+<div class="navbar">
+     <div class="logo">
+          <span class="logo-text">Campus QueueFlow</span>
+    </div>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+         <a href="admin.html" id="updateLink">Update</a> <!-- Added Update Queue link -->
+        <a href="login.html" class="user-icon" id="navUserIcon">
+    <i class="fas fa-user"></i>
+        </a>
+
+    </div>
+</div>
+
+<div class="dashboard-container">
+    <h2>Live Queue Dashboard</h2>
+    <p>Here you can see the current queue and estimated wait time for campus services.</p>
+
+    <!-- Search bar -->
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search location..." class="search-input">
+</div>
+
+    <div id="locations"></div>
+
+    <!-- Show admin link if user is logged in -->
+    <div id="adminLinkContainer"></div>
+</div>
+
+<script src="app.js"></script>
+<script>
+    updateNavbar();
+</script>
+
+<script src="data.js"></script>
+<script>
+    // Load all locations from localStorage
+    loadLocations();
+
+    // =========================
+// SEARCH LOCATIONS
+// =========================
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+    searchInput.addEventListener("input", function() {
+        const query = this.value.toLowerCase();
+        const locations = JSON.parse(localStorage.getItem("locations")) || [];
+
+        const filtered = locations.filter(loc => loc.name.toLowerCase().includes(query));
+        displayLocations(filtered);
+    });
+}
+
+// Modified function to display filtered locations
+function displayLocations(locations) {
+    const container = document.getElementById("locations");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    if (locations.length === 0) {
+        container.innerHTML = "<p>No results found.</p>";
+        return;
+    }
+
+    locations.forEach(loc => {
+        container.innerHTML += `
+            <div class="card ${loc.crowdLevel}">
+                <h3>${loc.name}</h3>
+                <p><b>Queue:</b> ${loc.currentQueue}</p>
+                <p><b>Wait Time:</b> ${loc.avgWaitTime} mins</p>
+                <p><i>Updated: ${loc.lastUpdated}</i></p>
+            </div>
+        `;
+    });
+}
+
+// Call displayLocations initially to show all
+loadLocations = () => {
+    const locations = JSON.parse(localStorage.getItem("locations")) || [];
+    displayLocations(locations);
+};
+
+
+    // Show "Update Queue" link if user is logged in
+    const adminContainer = document.getElementById("adminLinkContainer");
+    const loggedUser = localStorage.getItem("loggedInUser");
+    if(loggedUser) {
+        adminContainer.innerHTML = '<p>Logged in as <b>' + loggedUser + '</b> — <a href="admin.html">Update Queue Status</a></p>';
+    }
+</script>
+
+</body>
+</html>

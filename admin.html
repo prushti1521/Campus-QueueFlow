@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin – Update Queues</title>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<!-- =========================
+     NAVBAR
+========================= -->
+<div class="navbar">
+    <div class="logo">
+          <span class="logo-text">Campus QueueFlow</span>
+    </div>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="dashboard.html">Dashboard</a>
+         <a href="admin.html" id="updateLink">Update</a> <!-- Added Update Queue link -->
+        <a href="login.html" class="user-icon" id="navUserIcon">
+            <i class="fas fa-user"></i>
+        </a>
+    </div>
+</div>
+
+
+
+<!--main content-->
+
+<div class="admin-container">
+    <h2>Update Queue</h2>
+
+    <select id="locationSelect" class="input"></select>
+
+    <input class="input" id="queueNum" type="number" placeholder="Current Queue">
+    <input class="input" id="waitTime" type="number" placeholder="Estimated Wait Time (mins)">
+
+    <select id="crowdLevel" class="input">
+        <option value="green">Green (Low)</option>
+        <option value="yellow">Yellow (Moderate)</option>
+        <option value="red">Red (Busy)</option>
+    </select>
+    <div class="admin-buttons"></div>
+      <button class="update-btn" onclick="updateQueue()">Update</button>
+
+</div>
+
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+
+<script>
+loadLocationList();
+</script>
+<script>
+    updateNavbar();
+</script>
+</body>
+</html>
